@@ -1,0 +1,96 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}{{ lote.nome }}{% endblock %}
+{% block content %}
+
+<div class="card p-3 shadow-sm">
+  <!-- Container flexível: coluna em telas pequenas, linha em telas grandes -->
+  <div class="d-flex flex-column flex-md-row align-items-center">
+
+    <!-- Gráfico à esquerda -->
+    <div class="flex-shrink-0 mb-2 mb-md-0" style="width:150px; height:150px;">
+        <canvas id="chart-lote-{{ lote.pk }}"></canvas>
+    </div>
+
+    <!-- Informações à direita -->
+    <div class="ms-md-2 text-center text-md-start">
+        <p class="h5 mb-2">{{ lote.nome }}</p>
+        <p class="text-muted mb-2">{{ lote.get_tipo_ovos_display }} • {{ lote.dias_incubacao }} dias</p>
+        <p class="text-muted mb-2">
+            Início: {{ lote.inicio_incubacao|date:'D, d M Y H:i' }} <br>
+            Fim previsto: {{ lote.fim_previsto|date:'D, d M Y H:i' }}<br>
+            {{ lote.dia_atual }} de {{ lote.dias_incubacao }} dias
+        </p>
+    </div>
+  </div>
+
+  <!-- Botões de ação -->
+  <div class="text-center mt-0">
+    <a href="{% url 'incubacao:lote_editar' lote.pk %}" class="btn btn-primary btn-sm me-2">Editar</a>
+    <a href="{% url 'incubacao:lote_deletar' lote.pk %}" class="btn btn-danger btn-sm">Deletar</a>
+  </div>
+</div>
+
+<!-- Chart.js -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+  const ctx = document.getElementById("chart-lote-{{ lote.pk }}");
+
+  if (ctx) {
+    const prog = {{ lote.progresso_percent }};
+    const rest = 100 - prog;
+
+    let color = '#28a745';
+    if (prog >= 50 && prog < 75) color = '#ffc107';
+    else if (prog >= 75) color = '#dc3545';
+
+    new Chart(ctx, {
+      type: 'doughnut',
+      data: {
+        labels: ['Progresso', 'Restante'],
+        datasets: [{
+          data: [prog, rest],
+          backgroundColor: [color, '#e0e0e0'],
+          borderWidth: 0
+        }]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: true,
+        cutout: '70%',
+        plugins: { legend: { display: false }, tooltip: { enabled: false } },
+        animation: false
+      },
+      plugins: [{
+        id: "centerImage",
+        afterDraw: (chart) => {
+          const {ctx, chartArea: {width, height}} = chart;
+          const image = new Image();
+
+          const tipo = "{{ lote.tipo_ovos|escapejs }}";
+
+          if (tipo === 'CODORNA') image.src = "{% static 'codorna.png' %}";
+          else if (tipo === 'GALINHA') image.src = "{% static 'galo.png' %}";
+          else if (tipo === 'GALINHA DA ANGOLA') image.src = "{% static 'Galinha_da_angalo.png' %}";
+          else if (tipo === 'PERU') image.src = "{% static 'peru.png' %}";
+          else if (tipo === 'PERSONALIZADO') image.src = "{% static 'ovo_personalizado.png' %}";
+          else image.src = "{% static 'galo.png' %}";
+
+          const x = chart.chartArea.left + width / 2;
+          const y = chart.chartArea.top + height / 2;
+
+          ctx.save();
+          // ajusta o tamanho da imagem proporcional ao gráfico
+          const size = Math.min(width, height) * 0.5;
+          ctx.drawImage(image, x - size/2, y - size/2, size, size);
+          ctx.restore();
+        }
+      }]
+    });
+  }
+});
+</script>
+
+{% endblock %}

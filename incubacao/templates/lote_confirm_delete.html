@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <h2>Confirmar exclusão</h2>
+  <p>Tem certeza que deseja excluir o lote: "{{ object.nome }}"?</p>
+
+  <form method="post">
+    {% csrf_token %}
+    <button type="submit">Confirmar</button>
+    <a href="{% url 'incubacao:lote_lista' %}">Cancelar</a>
+  </form>
+{% endblock %}
