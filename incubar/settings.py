@@ -16,6 +16,7 @@ from pathlib import Path
 BASE_DIR = Path(__file__).resolve().parent.parent
 import os
 
+
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.1/howto/deployment/checklist/
 
@@ -106,15 +107,18 @@ AUTH_PASSWORD_VALIDATORS = [
 # https://docs.djangoproject.com/en/4.1/topics/i18n/
 
 LANGUAGE_CODE = 'PT-BR'
-
-
-
+# from incubacao.models import CustomUser
+# AUTH_USER_MODEL = 'incubacao.CustomUser' 
+AUTH_USER_MODEL = "incubacao.CustomUser"
 USE_I18N = True
 
 USE_TZ = True
 
 TIME_ZONE = 'America/Fortaleza'  # ajuste se quiser
 USE_TZ = True
+
+LOGIN_REDIRECT_URL = '/index'  # URL da sua view LoteListView
+LOGOUT_REDIRECT_URL = '/login'  # URL após logout
 
 
 # Static files (CSS, JavaScript, Images)

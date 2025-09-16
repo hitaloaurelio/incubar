@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Retirada do Pintinho</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    body { background-color: #f8f9fa; }
+    .hero { background: linear-gradient(90deg, #fff 0%, #f1f6ff 100%); border-radius: .5rem; }
+    .note { font-size: .95rem; }
+  </style>
+</head>
+<body>
+
+  <!-- Navbar -->
+  <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+    <div class="container">
+      <a class="navbar-brand fw-bold" href="{% url 'incubacao:listmenu' %}">Guia de Incubação</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item"><a class="nav-link" href="{% url 'incubacao:listmenu' %}">Voltar</a></li>
+          
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Hero -->
+  <main class="container py-5">
+    <div class="hero p-4 mb-4 shadow-sm">
+      <div class="d-flex justify-content-between align-items-center">
+        <div>
+          <h1 class="h4 mb-1">🐣 Retirada do Pintinho</h1>
+          <p class="mb-0 note text-muted">
+            A etapa final da incubação exige cuidado para garantir pintinhos saudáveis e bem desenvolvidos.
+          </p>
+        </div>
+        
+      </div>
+    </div>
+
+    <!-- Conteúdo -->
+    <article class="card shadow-lg border-0 mb-4">
+      <div class="card-body p-4">
+        <p>
+          Os pintinhos estão prontos para serem retirados quando a maioria deles está seca e com penugem. 
+          Alguns (mais ou menos 5%) ainda apresentam o pescoço úmido. 
+          Um erro comum é deixar os pintinhos além do tempo necessário dentro da máquina nascedouro, 
+          o que causa desidratação. A desidratação do pintinho pode ser resultado de um erro no ajuste do tempo da máquina incubadora 
+          com relação à idade dos ovos ou perda excessiva de peso durante o período de incubação.
+        </p>
+
+        <p>
+          Enquanto o pintinho é retirado, ele deverá ser separado dos fragmentos da casca, 
+          classificados em pintinhos de primeira e/ou descarte, contados e colocados em caixas. 
+          Alguns incubatórios estendem seus serviços além disso, como:
+        </p>
+
+        <ul>
+          <li><b>Sexagem</b>, na maioria das vezes feitas pelo exame das asas em pintinhos de frango de corte, bem como sexagem pela cloaca em matrizes;</li>
+          <li><b>Vacinação</b>, em spray ou injeção, manual ou automática;</li>
+        </ul>
+
+        <ol>
+          <li>
+            Durante o processamento, o ambiente onde ficam os pintinhos deve ser monitorado para evitar aquecimento ou resfriamento. 
+            Não superlotar as caixas com pintinhos ou durante o transporte nas esteiras rolantes. 
+            Para evitar a perda de peso dos pintinhos, manter o nível correto de umidade na sala de pintinhos. 
+            Almejar 23 °C com umidade relativa de 65–70%.
+          </li>
+          <li>
+            Foram desenvolvidas máquinas automáticas para melhorar o manuseio dos pintinhos enquanto se reduz também o número de funcionários.
+          </li>
+          <li>
+            Evitar manuseio grosseiro dos pintinhos em operações de manuseio manual e quando da utilização de máquinas. 
+            Fazer regularmente uma boa manutenção das máquinas.
+          </li>
+          <li>
+            Após cada nascimento, deve ser feita uma limpeza completa das máquinas. 
+            Todas as partes que ficam expostas ou em contato direto com os pintinhos, tais como esteiras rolantes e carrossel, 
+            devem ser de fácil acesso para a realização da limpeza.
+          </li>
+        </ol>
+
+        <!-- Conclusão -->
+        <div class="alert alert-primary mt-4 mb-0" role="alert">
+          <h5 class="fw-bold">✅ Conclusão</h5>
+          <p class="mb-0">
+            A retirada correta dos pintinhos garante sua saúde, reduz perdas por desidratação e assegura melhor qualidade no processo produtivo. 
+            O cuidado no manuseio, a higienização adequada e o controle ambiental são fatores essenciais para o sucesso nesta etapa.
+          </p>
+        </div>
+      </div>
+    </article>
+  </main>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

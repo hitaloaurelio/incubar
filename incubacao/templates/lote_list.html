@@ -1,14 +1,42 @@
 {% extends 'base.html' %}
 {% load static %}
 {% block title %}Lotes{% endblock %}
+
+{% block botao %}
+
+
+      {% comment %} <div class="ms-auto">
+        <a class="btn btn-outline-light" href="{% url 'incubacao:lote_criar' %}">Novo Lote</a>
+      </div>  {% endcomment %}
+
+      {% comment %} <li class="nav-item"><a class="nav-link" href="{% url 'incubacao:lote_criar' %}">Novo Lote</a></li> {% endcomment %}
+
+{% endblock %}
+
 {% block content %}
-<h1 class="h3 mb-4">Lotes</h1>
+
 
 {% if messages %}
   {% for m in messages %}
     <div class="alert alert-{{ m.tags }}">{{ m }}</div>
   {% endfor %}
 {% endif %}
+
+
+
+
+<div class="card py-2 p-3">
+      <a href="{% url 'incubacao:listmenu' %}" class="list-group-item list-group-item-action d-flex">
+        <div class="me-3 check-icon">✔️</div>
+        <div>
+          <h6>Guia de Incubação</h6>
+          <p>As principais informações sobre incubção</p>
+        </div>
+      </a>
+</div>
+
+
+<h1 class="h3 mb-2">Lotes</h1>
 
 <div class="list-group">
   {% for lote in lotes %}

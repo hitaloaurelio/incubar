@@ -1,0 +1,131 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Controle de Temperatura — Guia de Incubação</title>
+
+  <!-- Bootstrap 5 -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+
+  <style>
+    body { background-color: #f8f9fa; }
+    .hero { background: linear-gradient(90deg, #fff 0%, #fff5f2 100%); border-radius: .5rem; }
+    .section-title { font-weight: 600; }
+    .note { font-size: .95rem; }
+    ul.checklist { list-style-type: "🔥 "; padding-left: 1.2rem; }
+  </style>
+</head>
+<body>
+  <!-- Navbar -->
+  <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+    <div class="container">
+      <a class="navbar-brand fw-bold" href="{% url 'incubacao:listmenu' %}">Guia de Incubação</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navMenu">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div class="collapse navbar-collapse" id="navMenu">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item"><a class="nav-link" href="{% url 'incubacao:listmenu' %}">Voltar</a></li>
+          <li class="nav-item"><a class="nav-link" href="#multiplos">Múltiplos Estágios</a></li>
+          <li class="nav-item"><a class="nav-link" href="#unico">Estágio Único</a></li>
+          <li class="nav-item"><a class="nav-link" href="#variacoes">Variações</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Conteúdo -->
+  <main class="container py-5">
+    <!-- Introdução -->
+    <div class="hero p-4 mb-4 shadow-sm">
+      <div class="d-flex justify-content-between align-items-center">
+        <div>
+          <h1 class="h4 mb-1">🌡️ Controle de Temperatura</h1>
+          <p class="mb-0 note text-muted">
+            O fator mais crítico para o metabolismo e desenvolvimento do embrião.
+          </p>
+        </div>
+        
+      </div>
+    </div>
+
+    <!-- Card principal -->
+    <article class="card mb-4 shadow-sm">
+      <div class="card-body">
+        <section id="introducao" class="mb-4">
+          <h2 class="h5 section-title">1. Importância</h2>
+          <p>
+            A temperatura determina a <strong>velocidade do metabolismo do embrião</strong> e,
+            consequentemente, seu <strong>grau de desenvolvimento</strong>.
+          </p>
+        </section>
+
+        <section id="multiplos" class="mb-4">
+          <h2 class="h5 section-title">2. Máquinas de Múltiplos Estágios</h2>
+          <p>
+            Nessas máquinas, a <strong>temperatura deve ser constante</strong>.  
+            A ideal depende do modelo de máquina, mas qualquer desvio (acima ou abaixo do recomendado) 
+            altera a velocidade do desenvolvimento embrionário, reduzindo a taxa de nascimento.
+          </p>
+        </section>
+
+        <section id="unico" class="mb-4">
+          <h2 class="h5 section-title">3. Máquinas de Estágio Único</h2>
+          <p>
+            Aqui a temperatura pode ser <strong>ajustada em etapas</strong>, iniciando com valores mais altos
+            e reduzindo progressivamente até a transferência.  
+            Esse método ajuda a controlar o crescimento embrionário e o <strong>calor animal produzido</strong>.
+          </p>
+        </section>
+
+        <section id="variacoes" class="mb-4">
+          <h2 class="h5 section-title">4. Variações de Temperatura</h2>
+          <p>
+            Uma variação significativa pode ocorrer quando a máquina de múltiplos estágios
+            <strong>não é carregada de forma equilibrada</strong>:
+          </p>
+          <ul class="checklist">
+            <li>Máquinas parcialmente carregadas → não atingem a temperatura ideal → incubação prolongada.</li>
+            <li>Máquinas sobrecarregadas → risco de superaquecimento.</li>
+          </ul>
+          <p>
+            Ambos os cenários trazem <span class="text-danger fw-semibold">efeitos desfavoráveis</span> tanto 
+            para a taxa de nascimento quanto para a qualidade dos pintos.
+          </p>
+        </section>
+
+        <section class="mt-3">
+          <h2 class="h5 section-title">✅ Conclusão</h2>
+          <p>
+            O controle da temperatura deve seguir fielmente as <strong>recomendações do fabricante</strong> 
+            e manter equilíbrio no carregamento da máquina, garantindo desenvolvimento saudável do embrião.
+          </p>
+        </section>
+      </div>
+    </article>
+
+    <!-- Botões -->
+    <div class="d-flex justify-content-between align-items-center">
+      <a href="{% url 'incubacao:listmenu' %}" class="btn btn-outline-secondary">Voltar</a>
+      <button id="printBtn" class="btn btn-success">Imprimir / Salvar PDF</button>
+    </div>
+  </main>
+
+  <!-- Rodapé -->
+  <footer class="py-4 mt-5 bg-white border-top">
+    <div class="container text-center text-muted small">
+      © <span id="year"></span> Guia de Incubação — Informações técnicas e práticas
+    </div>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+  <script>
+    document.getElementById('year').textContent = new Date().getFullYear();
+    document.getElementById('printBtn').addEventListener('click', function () {
+      window.print();
+    });
+  </script>
+</body>
+</html>

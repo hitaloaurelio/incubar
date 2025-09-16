@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Incubação dos Ovos</title>
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body class="bg-light">
+
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+        <div class="container">
+          <a class="navbar-brand fw-bold" href="{% url 'incubacao:listmenu' %}">Guia de Incubação</a>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navMenu">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+    
+          <div class="collapse navbar-collapse" id="navMenu">
+            <ul class="navbar-nav ms-auto">
+              <li class="nav-item"><a class="nav-link" href="{% url 'incubacao:listmenu' %}">Voltar</a></li>
+            </ul>
+          </div>
+        </div>
+      </nav>
+
+
+      
+  <div class="container my-5">
+
+
+      <!-- Hero -->
+      <div class="hero p-4 mb-4 card shadow-sm border-0">
+        <div class="container">
+          <div class="d-flex justify-content-between align-items-center">
+            <div>
+              <h1 class="h4 mb-1">🥚 Incubação dos Ovos</h1>
+              <p class="mb-0 note text-muted">
+                Etapa fundamental que prepara os ovos para o nascimento com segurança e maior taxa de eclosão.
+              </p>
+            </div>
+            
+          </div>
+        </div>
+      </div>
+
+    <div class="card shadow-lg border-0">
+      <div class="card-body p-5">
+        <h1 class="text-center text-primary mb-4">🥚 Incubação dos Ovos</h1>
+
+   
+
+        <p class="fs-5">
+          Para evitar o choque térmico do embrião e a consequente condensação na casca, os ovos devem ser retirados da sala de ovos e preaquecidos antes de incubar. 
+          O ideal seria pré-aquecer os ovos em uma sala destinada para esta finalidade, sob temperatura de <strong>24-27 ºC (75–80°F)</strong> de modo que todos os ovos possam atingir a temperatura desejada.
+        </p>
+
+        <p class="fs-5">
+          A circulação eficiente de ar e a temperatura correta nesta sala são essenciais para o preaquecimento uniforme dos ovos. 
+          O preaquecimento realizado de maneira desuniforme aumenta a diferença no tempo de incubação, justamente o oposto da finalidade do preaquecimento.
+        </p>
+
+        <p class="fs-5">
+          Mesmo com boa circulação de ar, são necessárias <strong>6 horas</strong> para que os ovos no carrinho atinjam 25 ºC, indiferente da temperatura inicial. 
+          Com má circulação de ar, esse processo pode demorar até duas vezes mais. 
+        </p>
+
+        <div class="alert alert-info mt-4">
+          <h5 class="alert-heading">✅ Recomendações:</h5>
+          <ul class="mb-0">
+            <li>Propiciar boa circulação de ar ao redor dos ovos.</li>
+            <li>Permitir <strong>6 a 12 horas</strong> de preaquecimento.</li>
+          </ul>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- Bootstrap JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

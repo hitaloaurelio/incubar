@@ -2,7 +2,19 @@
 {% load static %}
 
 {% block title %}{{ lote.nome }}{% endblock %}
+
+
+{% block botao %}      
+
+        <li class="nav-item"><a class="nav-link" href="{% url 'incubacao:lote_lista' %}">Listagem</a></li>
+        <li class="nav-item"><a class="nav-link" href="{% url 'incubacao:lote_criar' %}">Novo Lote</a></li>
+      
+{% endblock %}
+
+
 {% block content %}
+
+
 
 <div class="card p-3 shadow-sm">
   <!-- Container flexível: coluna em telas pequenas, linha em telas grandes -->
@@ -27,7 +39,12 @@
 
   <!-- Botões de ação -->
   <div class="text-center mt-0">
-    <a href="{% url 'incubacao:lote_editar' lote.pk %}" class="btn btn-primary btn-sm me-2">Editar</a>
+    
+
+    {% if request.user.tipo != "FREE" %}
+      <a href="{% url 'incubacao:lote_editar' lote.pk %}" class="btn btn-primary btn-sm me-2">Editar</a>
+    {% endif %}
+
     <a href="{% url 'incubacao:lote_deletar' lote.pk %}" class="btn btn-danger btn-sm">Deletar</a>
   </div>
 </div>

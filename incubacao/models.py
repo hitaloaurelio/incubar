@@ -1,11 +1,31 @@
 from django.db import models
-
-# Create your models here.
-
-
-from django.db import models
 from django.utils import timezone
-from datetime import timedelta
+from datetime import timedelta, date
+from django.contrib.auth.models import AbstractUser
+from django.conf import settings
+
+
+class CustomUser(AbstractUser):
+    email = models.EmailField(unique=True)  # 🔹 garante que e-mails não se repitam
+
+    USERNAME_FIELD = 'email'   # 🔹 login será feito com e-mail
+    REQUIRED_FIELDS = ['username']        # ⚠️ necessário para superuser
+
+
+
+    class TipoUsuario(models.TextChoices):
+        FREE = 'FREE', 'Free'
+        PAGO = 'PAGO', 'Pago'
+
+    tipo = models.CharField(
+        max_length=10,
+        choices=TipoUsuario.choices,
+        default=TipoUsuario.FREE,  # <-- padrão FREE
+        help_text="Tipo de usuário: Free (1 lote) ou Pago (ilimitado)"
+    )
+    def __str__(self):
+        return self.email
+
 
 class EggType(models.TextChoices):
     CODORNA = 'CODORNA', 'Codorna (17 dias)'
@@ -14,17 +34,29 @@ class EggType(models.TextChoices):
     PERU = 'PERU', 'Perú (28 dias)'
     PERSONALIZADO = 'PERSONALIZADO', 'Personalizado'
 
+
 DEFAULT_DIAS = {
     EggType.CODORNA: 17,
     EggType.GALINHA: 21,
     EggType.GALINHA_DA_ANGOLA: 28,
     EggType.PERU: 28,
 }
-from datetime import date
+
+
 class Lote(models.Model):
     nome = models.CharField(max_length=100)
+    usuario = models.ForeignKey(
+        settings.AUTH_USER_MODEL,   # 🔹 Agora sim, aponta para o CustomUser
+        on_delete=models.CASCADE,
+        related_name="lotes",
+        null=True,
+        blank=True,
+    )
     tipo_ovos = models.CharField(max_length=20, choices=EggType.choices)
-    dias_personalizados = models.PositiveIntegerField(null=True, blank=True, help_text="Se vazio, usa padrão do tipo de ovos")
+    dias_personalizados = models.PositiveIntegerField(
+        null=True, blank=True,
+        help_text="Se vazio, usa padrão do tipo de ovos"
+    )
     inicio_incubacao = models.DateTimeField(default=timezone.now)
 
     criado_em = models.DateTimeField(auto_now_add=True)
@@ -48,7 +80,6 @@ class Lote(models.Model):
         delta = (hoje - self.inicio_incubacao.date()).days + 1
         return max(1, min(delta, self.dias_incubacao))
 
-
     @property
     def fim_previsto(self):
         if not self.inicio_incubacao or not self.dias_incubacao:
@@ -57,7 +88,6 @@ class Lote(models.Model):
 
     @property
     def progresso_percent(self) -> int:
-        """Progresso 0–100 baseado no tempo decorrido entre início e fim previsto."""
         fim = self.fim_previsto
         if not fim:
             return 0

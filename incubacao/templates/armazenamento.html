@@ -1,0 +1,160 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Efeitos do Armazenamento de Ovos — Incubação</title>
+
+  <!-- Bootstrap 5 CDN -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+
+  <style>
+    /* Pequenos ajustes visuais */
+    body { background-color: #f8f9fa; }
+    .hero { background: linear-gradient(90deg, #fff 0%, #f1f6ff 100%); border-radius: .5rem; }
+    .section-title { font-weight: 600; }
+    .note { font-size: .95rem; }
+    .cond-table td, .cond-table th { vertical-align: middle; }
+  </style>
+</head>
+<body>
+  <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+    <div class="container">
+      <a class="navbar-brand fw-bold" href="{% url 'incubacao:listmenu' %}">Guia de Incubação</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navMenu">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div class="collapse navbar-collapse" id="navMenu">
+        <ul class="navbar-nav ms-auto">
+            <ul class="navbar-nav ms-auto">
+                <li class="nav-item"><a class="nav-link" href="{% url 'incubacao:listmenu' %}">Voltar</a></li>
+            </ul>
+          <li class="nav-item"><a class="nav-link" href="#tempo">Tempo</a></li>
+          <li class="nav-item"><a class="nav-link" href="#taxa">Eclosão</a></li>
+          <li class="nav-item"><a class="nav-link" href="#qualidade">Qualidade</a></li>
+          <li class="nav-item"><a class="nav-link" href="#gases">Gases</a></li>
+          <li class="nav-item"><a class="nav-link" href="#condicoes">Condições</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <main class="container py-5">
+    <div class="hero p-4 mb-4 shadow-sm">
+      <div class="d-flex justify-content-between align-items-center">
+        <div>
+          <h1 class="h4 mb-1">📌 Efeitos do Armazenamento de Ovos</h1>
+          <p class="mb-0 note text-muted">O armazenamento de ovos antes da incubação é um processo crítico que influencia diretamente a taxa de eclosão e a qualidade dos pintinhos.</p>
+        </div>
+        
+      </div>
+    </div>
+
+    <article class="card mb-4 shadow-sm">
+      <div class="card-body">
+        <section id="tempo" class="mb-4">
+          <h2 class="h5 section-title">1. Tempo de Incubação</h2>
+          <p>
+            Ovos armazenados por vários dias tendem a <strong>demorar mais para eclodir</strong>.
+            <br><strong>Regra prática:</strong> para cada dia de armazenamento, adicionar aproximadamente <strong>1 hora</strong> ao tempo total de incubação.
+            Isso significa que ovos frescos e ovos armazenados devem ser programados em tempos diferentes dentro da incubadora.
+          </p>
+        </section>
+
+        <section id="taxa" class="mb-4">
+          <h2 class="h5 section-title">2. Taxa de Eclosão</h2>
+          <p>
+            Quanto maior o tempo de armazenamento, <strong>menor a eclodibilidade</strong>.
+            Após o <strong>6º dia</strong> de armazenamento, a perda pode chegar a <strong>0,5% a 2% por dia</strong>, aumentando progressivamente.
+            Ovos armazenados por <strong>14 dias ou mais</strong> apresentam quedas significativas na taxa de nascimento.
+          </p>
+        </section>
+
+        <section id="qualidade" class="mb-4">
+          <h2 class="h5 section-title">3. Qualidade dos Pintinhos</h2>
+          <p>
+            Pintinhos oriundos de ovos armazenados por longos períodos tendem a nascer <strong>mais fracos, com menor peso</strong> e menor desempenho produtivo.
+            O ideal é que os ovos sejam incubados o mais rápido possível após a postura para maximizar vigor e qualidade.
+          </p>
+        </section>
+
+        <section id="gases" class="mb-4">
+          <h2 class="h5 section-title">4. Troca de Gases e Perda de Umidade</h2>
+          <p>
+            Durante o armazenamento ocorre a perda natural de <strong>dióxido de carbono (CO₂)</strong> e <strong>água</strong> através dos poros da casca.
+            Essa perda inicia nas primeiras <strong>12 horas</strong> após a postura e se intensifica com o tempo, contribuindo para a redução da taxa de eclosão e qualidade do pintinho.
+          </p>
+        </section>
+
+        <section id="condicoes" class="mb-4">
+          <h2 class="h5 section-title">5. Condições Ideais de Armazenamento</h2>
+
+          <p class="mb-2">Para minimizar perdas, recomenda-se:</p>
+
+          <div class="table-responsive mb-3">
+            <table class="table table-bordered cond-table">
+              <tbody>
+                <tr>
+                  <th style="width: 35%;">Temperatura</th>
+                  <td>Entre <strong>12°C e 18°C</strong></td>
+                </tr>
+                <tr>
+                  <th>Umidade relativa</th>
+                  <td>Entre <strong>75% e 80%</strong></td>
+                </tr>
+                <tr>
+                  <th>Ventilação</th>
+                  <td>Caixas abertas ou carrinhos, garantindo circulação de ar</td>
+                </tr>
+                <tr>
+                  <th>Manuseio</th>
+                  <td>Deixar os ovos esfriar e secar completamente antes de armazenar para evitar condensação e fungos</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <p class="mb-0 note text-muted">
+            Observação: condições ideais podem variar ligeiramente conforme espécie (galinha, codorna, peru) e práticas do incubatório.
+          </p>
+        </section>
+
+        <section class="mt-3">
+          <h2 class="h5 section-title">✅ Conclusão</h2>
+          <p>
+            O armazenamento deve ser o mais curto possível e sempre em condições controladas. Isso garante maior taxa de nascimento e melhor qualidade dos pintinhos.
+            Adotar boas práticas de temperatura, umidade, ventilação e manuseio reduz perdas e melhora a eficiência do processo de incubação.
+          </p>
+        </section>
+      </div>
+    </article>
+
+    <div class="d-flex justify-content-between align-items-center">
+      <div>
+        <a href="#" class="btn btn-outline-secondary">Voltar</a>
+      </div>
+      <div>
+        <button id="printBtn" class="btn btn-success">Imprimir / Salvar PDF</button>
+      </div>
+    </div>
+  </main>
+
+  <footer class="py-4 mt-5 bg-white border-top">
+    <div class="container text-center text-muted small">
+      © <span id="year"></span> Guia de Incubação — Informações técnicas e práticas
+    </div>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+  <script>
+    // Atualiza o ano do rodapé
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    // Imprimir
+    document.getElementById('printBtn').addEventListener('click', function () {
+      window.print();
+    });
+  </script>
+</body>
+</html>

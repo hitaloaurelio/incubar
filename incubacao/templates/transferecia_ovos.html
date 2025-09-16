@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Transferência dos Ovos</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+
+  <!-- Navbar -->
+  <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+    <div class="container">
+      <a class="navbar-brand fw-bold" href="{% url 'incubacao:listmenu' %}">Guia de Incubação</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item"><a class="nav-link" href="{% url 'incubacao:listmenu' %}">Voltar</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Hero -->
+  <div class=" container mt-4 ">
+    <div class=" card shadow border-0 m-2 hero p-2 mb-2 ">
+      <div class="d-flex justify-content-between align-items-center">
+        <div>
+          <h1 class="h4 mb-1">🥚 Transferência dos Ovos</h1>
+          <p class="mb-0 note text-muted">
+            Etapa fundamental que prepara os ovos para o nascimento com segurança e maior taxa de eclosão.
+          </p>
+        </div>
+        
+      </div>
+    </div>
+  </div>
+
+  <!-- Conteúdo -->
+  <div class="container my-4">
+    <div class="card shadow border-0">
+      <div class="card-body p-4">
+        
+        <p>
+          Aos 18 ou 19 dias (no caso de Galinhas), os ovos são transferidos da máquina incubadora para as bandejas do nascedouro. 
+          Isto é feito por duas razões. Uma porque os ovos são deixados de lado para facilitar o movimento livre do pintinho ao nascer 
+          e, a outra, porque ajuda na higiene durante o nascimento, quando se produz grande quantidade de penugem que, 
+          se estiver contaminada, poderia espalhar-se ao redor do incubatório.
+        </p>
+        <p>
+          Quando os ovos são transferidos precoce ou tardiamente, o embrião é exposto a condições não tão favoráveis, 
+          diminuindo assim os nascimentos. Tudo isso deve ser levado em consideração quando se altera o momento da transferência. 
+          O momento da transferência irá variar dependendo do tipo de máquina (em geral é realizado entre 18 ou 19 dias).
+        </p>
+        <p>
+          A transferência deve ser feita de forma cuidadosa e rápida, evitando o resfriamento dos ovos, 
+          o que resultará em atraso do nascimento.
+        </p>
+        <p>
+          Ao transferir os ovos, pode ser feita a ovoscopia, separando os ovos claros (inférteis e embriões mortos, ovos estragados e outros) 
+          para contá-los e descartá-los.
+        </p>
+        <p>
+          Neste estágio, a casca do ovo é mais frágil devido ao embrião retirar cálcio da casca para a formação do seu esqueleto. 
+          Sendo assim, extremo cuidado é necessário durante sua transferência para evitar a quebra do ovo. 
+          O manuseio incorreto dos ovos durante esta fase pode ocasionar hemorragias e rupturas. 
+          As transferências automatizadas permitem a realização mais cuidadosa deste processo do que se consegue manualmente.
+        </p>
+        <p>
+          As bandejas devem estar limpas e secas no momento da transferência. 
+          Ovos colocados em bandejas molhadas esfriam quando a água se evapora. 
+          Os Nascedouros devem estar secos e na temperatura adequada antes da transferência dos ovos.
+        </p>
+        <p>
+          Ovos podres e estragados devem ser colocados em um recipiente com desinfetante.
+        </p>
+
+        <!-- Conclusão -->
+        <div class="shadow-sm alert alert-primary mt-4 mb-0" role="alert">
+          <h5 class="fw-bold">Conclusão</h5>
+          <p class="mb-0">
+            A transferência dos ovos é uma etapa crítica no processo de incubação. 
+            Realizá-la no momento adequado, com higiene, cuidado e rapidez, garante maior taxa de nascimento, 
+            melhor qualidade dos pintinhos e reduz riscos de perdas devido a manuseio incorreto ou condições desfavoráveis.
+          </p>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
