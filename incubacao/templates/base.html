@@ -1,3 +1,4 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
@@ -6,6 +7,7 @@
   <title>INCUBAR – {% block title %}{% endblock %}</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <link rel="icon" type="image/png" href="{% static 'eggs.png' %}">
   
   
   <style>
@@ -39,7 +41,7 @@
   </nav> {% endcomment %}
 
 
-  <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+  {% comment %} <nav style="background-color: rgb(255 93 40) !important;" class="navbar navbar-expand-lg navbar-dark">
     <div class="container">
       <a class="navbar-brand fw-bold" href="{% url 'incubacao:lote_lista' %}">Incubar</a>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navMenu">
@@ -48,9 +50,6 @@
 
       <div class="collapse navbar-collapse" id="navMenu">
         <ul class="navbar-nav ms-auto">
-
-      
-
           
           {% block botao %}
       
@@ -64,13 +63,42 @@
                 </form>
               </li>
           {% endif %}
+        </ul>
+      </div>
+    </div>
+  </nav> {% endcomment %}
 
-         
-
+  <nav style="background-color: rgb(255 93 40) !important;" class="navbar navbar-expand-lg navbar-dark">
+    <div class="container d-flex justify-content-between">
+  
+      <!-- Botão + Logo juntos -->
+      <div class="d-flex align-items-center">
+        <button class="navbar-toggler me-1" type="button" data-bs-toggle="collapse" data-bs-target="#navMenu">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <a class="navbar-brand fw-bold mb-0" href="{% url 'incubacao:lote_lista' %}">Incubar</a>
+      </div>
+  
+      <!-- Menu -->
+      <div class="collapse navbar-collapse" id="navMenu">
+        <ul class="navbar-nav ms-auto">
+          {% block botao %}{% endblock %}
+          {% if user.is_authenticated %}
+            <li class="nav-item">
+              <form method="post" action="{% url 'incubacao:logout' %}" class="d-inline">
+                {% csrf_token %}
+                <button type="submit" class="nav-link btn btn-link text-white">Sair</button>
+              </form>
+            </li>
+          {% endif %}
         </ul>
       </div>
     </div>
   </nav>
+  
+  
+
+
 
 
   <main class="container py-4">
@@ -79,12 +107,40 @@
     {% endblock %}
 
     {% if user.is_authenticated %}
-          <a href="{% url 'incubacao:lote_criar' %}" style="position:fixed;width:55px;height:55px;bottom:8%;right:10px;background-color:#0d6efdcf; color:#FFF;border-radius:30px;text-align:center;font-size:30px;box-shadow: 2px 2px 2px #888;z-index:1000;">
+          {% comment %} <a href="{% url 'incubacao:lote_criar' %}" style="position:fixed;width:45px;height:55px;bottom:8%;right:10px;background-color:#0d6efdcf; color:#FFF;border-radius:30px;text-align:center;font-size:30px;box-shadow: 2px 2px 2px #888;z-index:1000;">
                       
             <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-plus-lg" viewBox="0 0 16 16">
               <path fill-rule="evenodd" d="M8 2a.5.5 0 0 1 .5.5v5h5a.5.5 0 0 1 0 1h-5v5a.5.5 0 0 1-1 0v-5h-5a.5.5 0 0 1 0-1h5v-5A.5.5 0 0 1 8 2"/>
             </svg>
-          </a>
+          </a> {% endcomment %}
+          <a href="{% url 'incubacao:lote_criar' %}" 
+   style="position:fixed;
+          width:55px;
+          height:75px;
+          bottom:8%;
+          right:10px;
+          
+          background-color: #ff3f00bf;
+          color:#FFF;
+          border-radius:50% 50% 45% 45% / 60% 60% 40% 40%; /* 🔹 formato de ovo */
+          text-align:center;
+          font-size:30px;
+          box-shadow: 2px 2px 5px #888;
+          z-index:1000;
+          display:flex;
+          align-items:center;
+          justify-content:center;">
+          
+  <svg xmlns="http://www.w3.org/2000/svg" 
+       width="32" height="32" 
+       fill="currentColor" 
+       class="bi bi-plus-lg" 
+       viewBox="0 0 16 16">
+    <path fill-rule="evenodd" 
+          d="M8 2a.5.5 0 0 1 .5.5v5h5a.5.5 0 0 1 0 1h-5v5a.5.5 0 0 1-1 0v-5h-5a.5.5 0 0 1 0-1h5v-5A.5.5 0 0 1 8 2"/>
+  </svg>
+</a>
+
     {% endif %}
   </main>
 

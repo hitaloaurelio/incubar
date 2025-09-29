@@ -14,6 +14,18 @@ class LoteAdmin(admin.ModelAdmin):
     search_fields = ('nome',)
 
 
+# incubacao/admin.py
+from django.contrib import admin
+from .models import Lote, Anotacao
+
+@admin.register(Anotacao)
+class AnotacaoAdmin(admin.ModelAdmin):
+    list_display = ("lote", "texto", "criado_em")
+    list_filter = ("criado_em", "lote")
+    search_fields = ("texto", "lote__nome")
+    ordering = ("-criado_em",)
+
+
 
 
 class CustomUserAdmin(UserAdmin):

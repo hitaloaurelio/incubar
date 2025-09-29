@@ -15,6 +15,12 @@
 {% block content %}
 
 
+{% if messages %}
+  {% for m in messages %}
+    <div class="alert alert-{{ m.tags }}">{{ m }}</div>
+  {% endfor %}
+{% endif %}
+
 
 <div class="card p-3 shadow-sm">
   <!-- Container flexível: coluna em telas pequenas, linha em telas grandes -->
@@ -37,6 +43,7 @@
     </div>
   </div>
 
+ 
   <!-- Botões de ação -->
   <div class="text-center mt-0">
     
@@ -46,8 +53,121 @@
     {% endif %}
 
     <a href="{% url 'incubacao:lote_deletar' lote.pk %}" class="btn btn-danger btn-sm">Deletar</a>
+
+    <button class="btn btn-sm btn-success" data-bs-toggle="modal" data-bs-target="#modalAnotacao">
+      Add Anotações
+    </button>
   </div>
 </div>
+
+<div class=" p-2">
+  <h4>Anotações</h4>
+</div>
+
+
+<div class="list-group">
+  {% for anotacao in lote.anotacoes.all %}
+  <div class="list-group-item list-group-item-action" >
+      <div class="d-flex justify-content-between align-items-center">
+        {{ anotacao.texto }} - {{ anotacao.criado_em|date:"d/m/Y H:i" }}
+
+         <!-- Container flexível para os botões -->
+         <div class="d-flex gap-2">
+        <!-- Botão que abre o modal específico da anotação -->
+        <button class="btn btn-sm btn-danger" data-bs-toggle="modal" data-bs-target="#modalDeletar{{ anotacao.id }}">
+          Deletar 
+        </button>
+
+        
+
+        <button class="btn btn-sm btn-warning" data-bs-toggle="modal" data-bs-target="#modalEditar{{ anotacao.id }}">
+          Editar
+        </button>
+      </div>
+
+      </div>
+  </div>
+
+
+<!-- Modal de confirmação -->
+<div class="modal fade" id="modalDeletar{{ anotacao.id }}" tabindex="-1" aria-labelledby="modalDeletarLabel{{ anotacao.id }}" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header bg-danger text-white">
+        <h5 class="modal-title" id="modalDeletarLabel{{ anotacao.id }}">Confirmar Exclusão</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"></button>
+      </div>
+      <div class="modal-body">
+        Tem certeza que deseja excluir esta anotação?  
+        <p class="mt-2"><em>"{{ anotacao.texto }} "</em></p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal">Cancelar</button>
+        <form method="post" action="{% url 'incubacao:anotacao_deletar' anotacao.pk %}">
+          {% csrf_token %}
+          <button type="submit" class="btn btn-danger btn-sm">Excluir</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+ <!-- Modal de Edição -->
+ <div class="modal fade" id="modalEditar{{ anotacao.id }}" tabindex="-1" aria-labelledby="modalEditarLabel{{ anotacao.id }}" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <form method="post" action="{% url 'incubacao:anotacao_editar' anotacao.id %}">
+        {% csrf_token %}
+        <div class="modal-header">
+          <h5 class="modal-title" id="modalEditarLabel{{ anotacao.id }}">Editar Anotação</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"></button>
+        </div>
+        <div class="modal-body">
+          <textarea name="texto" class="form-control" rows="3">{{ anotacao.texto }}</textarea>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+          <button type="submit" class="btn btn-primary">Salvar alterações</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+  {% empty %}
+      <li>Sem anotações ainda.</li>
+  {% endfor %}
+
+</div>
+
+
+<!-- Modal -->
+<div class="modal fade" id="modalAnotacao" tabindex="-1" aria-labelledby="modalAnotacaoLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <form method="post" action="{% url 'incubacao:adicionar_anotacao' lote.pk %}">
+        {% csrf_token %}
+        <div class="modal-header">
+          <h5 class="modal-title" id="modalAnotacaoLabel">Adicionar Anotação</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"></button>
+        </div>
+        <div class="modal-body">
+          <textarea name="texto" class="form-control" rows="4" placeholder="Digite sua anotação..." required></textarea>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+          <button type="submit" class="btn btn-success">Salvar</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+
+
+
 
 <!-- Chart.js -->
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>

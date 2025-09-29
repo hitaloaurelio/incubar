@@ -117,7 +117,7 @@ USE_TZ = True
 TIME_ZONE = 'America/Fortaleza'  # ajuste se quiser
 USE_TZ = True
 
-LOGIN_REDIRECT_URL = '/index'  # URL da sua view LoteListView
+LOGIN_REDIRECT_URL = '/'  # URL da sua view LoteListView
 LOGOUT_REDIRECT_URL = '/login'  # URL após logout
 
 
@@ -125,8 +125,6 @@ LOGOUT_REDIRECT_URL = '/login'  # URL após logout
 # https://docs.djangoproject.com/en/4.1/howto/static-files/
 
 STATIC_URL = 'static/'
-
-STATIC_URL = '/static/'
 
 STATICFILES_DIRS = (os.path.join(BASE_DIR,'incubacao/static'),)
 

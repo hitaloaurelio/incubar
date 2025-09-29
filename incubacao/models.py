@@ -103,3 +103,16 @@ class Lote(models.Model):
         if self.progresso_percent >= 100:
             return 'Concluído'
         return 'Em andamento'
+
+
+class Anotacao(models.Model):
+    lote = models.ForeignKey(
+        Lote,
+        on_delete=models.CASCADE,
+        related_name="anotacoes"
+    )
+    texto = models.TextField()
+    criado_em = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"Anotação em {self.lote.nome} - {self.criado_em.strftime('%d/%m/%Y')}"

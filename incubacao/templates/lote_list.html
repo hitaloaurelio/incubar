@@ -5,12 +5,7 @@
 {% block botao %}
 
 
-      {% comment %} <div class="ms-auto">
-        <a class="btn btn-outline-light" href="{% url 'incubacao:lote_criar' %}">Novo Lote</a>
-      </div>  {% endcomment %}
-
-      {% comment %} <li class="nav-item"><a class="nav-link" href="{% url 'incubacao:lote_criar' %}">Novo Lote</a></li> {% endcomment %}
-
+     
 {% endblock %}
 
 {% block content %}
@@ -51,13 +46,13 @@
         <!-- COLUNA ESQUERDA (informações do lote) -->
         <div>
           <h2 class="h5 mb-1">{{ lote.nome }}</h2>
+          <div class="text-muted" style="color:#ff0000 !important; font-weight: bold;">
+            {{ lote.dia_atual }} de {{ lote.dias_incubacao }} dias
+          </div>
           <div class="text-muted">
             <small>{{ lote.inicio_incubacao|date:'D, d M Y H:i' }}</br> {{ lote.fim_previsto|date:'D, d M Y H:i' }}</small>
           </div>
-          <div class="text-muted">
-            {% comment %} {{ lote.dias_incubacao }} dias • {{ lote.get_tipo_ovos_display }} {% endcomment %}
-            {{ lote.dia_atual }} de {{ lote.dias_incubacao }} dias
-          </div>
+          
         </div>
 
         
@@ -127,12 +122,22 @@
 
 
 
-                    const x = chart.chartArea.left + width / 2;
+                    {% comment %} const x = chart.chartArea.left + width / 2;
                     const y = chart.chartArea.top + height / 2;
 
                     ctx.save();
                     ctx.drawImage(image, x - 35, y - 35, 70, 70); // (x, y, largura, altura)
-                    ctx.restore();
+                    ctx.restore(); {% endcomment %}
+
+                    image.onload = () => {   // ✅ só desenha quando carregar
+                      const x = chart.chartArea.left + width / 2;
+                      const y = chart.chartArea.top + height / 2;
+                
+                      ctx.save();
+                      ctx.drawImage(image, x - 35, y - 35, 70, 70);
+                      ctx.restore();
+                    };
+
                   }
                 }]
             });

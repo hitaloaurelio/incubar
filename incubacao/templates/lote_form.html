@@ -1,5 +1,15 @@
 {% extends 'base.html' %}
 {% block title %}Novo Lote{% endblock %}
+
+
+
+{% block botao %}
+      
+    <li class="nav-item"><a class="nav-link" href="{% url 'incubacao:lote_lista' %}">Listagem</a></li>
+
+{% endblock %}
+
+
 {% block content %}
 {% comment %} <h1 class="h3 mb-4">Criar novo lote</h1> {% endcomment %}
 
@@ -12,14 +22,7 @@
 {% endif %}
 
 
-{% block botao %}
 
-      
-
-      
-      <li class="nav-item"><a class="nav-link" href="{% url 'incubacao:lote_lista' %}">Listagem</a></li>
-
-{% endblock %}
 
 <form method="post" class="card card-body shadow-sm">
   {% csrf_token %}
@@ -29,9 +32,20 @@
     <div class="col-md-4"  id="dias_personalizados_field" style="display: none;" >{{ form.dias_personalizados.label_tag }} {{ form.dias_personalizados }}</div>
     <div class="col-md-8">{{ form.inicio_incubacao.label_tag }} {{ form.inicio_incubacao }}</div>
 
+    <!-- Campo só para exibir a data final -->
+    <div class="col-md-12">
+      <label>Data final prevista:</label>
+      <input class="form-control-plaintext" type="text" id="fim_previsto" readonly>
+    </div>
+
     {% comment %} {{ form.as_p }}  {% endcomment %}
 
   </div>
+
+
+
+
+
   <div class="mt-4 d-flex justify-content-center gap-5">
         <a href="{% url 'incubacao:lote_lista' %}" class="btn btn-outline-secondary">Cancelar</a>
 
@@ -44,6 +58,18 @@
 
 
 </form>
+
+<div class="card p-3 shadow-sm">
+  <h3>Anotações</h3>
+  <ul>
+    {% for anotacao in lote.anotacoes.all %}
+      <li> {{ anotacao.texto }}: <strong>{{ anotacao.criado_em|date:"d/m/Y H:i" }}</strong></li>
+    {% empty %}
+      <li>Sem anotações ainda.</li>
+    {% endfor %}
+  </ul>
+</div>
+
 
 
 <script>
@@ -66,6 +92,79 @@
     // Executa quando mudar a seleção
     tipoSelect.addEventListener("change", toggleDiasField);
   });
+
+
+  document.addEventListener("DOMContentLoaded", function () {
+    const tipoSelect = document.getElementById("id_tipo_ovos");
+    const diasFieldWrapper = document.getElementById("dias_personalizados_field");
+    const diasInput = document.getElementById("id_dias_personalizados");
+    const inicioInput = document.getElementById("id_inicio_incubacao");
+    const fimPrevistoInput = document.getElementById("fim_previsto");
+
+    // Dias padrão para cada tipo de ovo
+    const diasPorTipo = {
+      "GALINHA": 21,
+      "CODORNA": 18,
+      "PERU": 28,
+      "GALINHA DA ANGOLA": 28,
+      "PERSONALIZADO": null
+    };
+
+    function toggleDiasField() {
+      if (tipoSelect.value === "PERSONALIZADO") {
+        diasFieldWrapper.style.display = "block";
+      } else {
+        diasFieldWrapper.style.display = "none";
+        if (diasInput) diasInput.value = ""; // limpa se não for personalizado
+      }
+      calcularFimPrevisto();
+    }
+
+    function calcularFimPrevisto() {
+      const inicio = new Date(inicioInput.value);
+      if (isNaN(inicio)) {
+        fimPrevistoInput.value = "";
+        return;
+      }
+
+      let dias = diasPorTipo[tipoSelect.value];
+      if (tipoSelect.value === "PERSONALIZADO" && diasInput.value) {
+        dias = parseInt(diasInput.value);
+      }
+
+      if (!dias) {
+        fimPrevistoInput.value = "";
+        return;
+      }
+
+      // soma os dias
+      const fim = new Date(inicio);
+      fim.setDate(fim.getDate() + dias);
+
+      fimPrevistoInput.value = fim.toLocaleDateString("pt-BR", {
+        weekday: "short",
+        day: "2-digit",
+        month: "short",
+        year: "numeric",
+        hour: "2-digit",
+        minute: "2-digit"
+      });
+    }
+
+    // Executa ao carregar a página
+    toggleDiasField();
+    calcularFimPrevisto();
+
+    // Listeners
+    tipoSelect.addEventListener("change", toggleDiasField);
+    if (diasInput) diasInput.addEventListener("input", calcularFimPrevisto);
+    inicioInput.addEventListener("change", calcularFimPrevisto);
+  });
+
+
+
+
+
 </script>
 
 

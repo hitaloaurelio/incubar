@@ -10,7 +10,7 @@ from django.urls import reverse_lazy
 from django.shortcuts import redirect, get_object_or_404
 from django.contrib import messages
 
-from .models import Lote, EggType
+from .models import Lote, EggType,Anotacao
 from .forms import LoteForm
 from django.contrib.auth.mixins import LoginRequiredMixin
 
@@ -153,3 +153,53 @@ def transferecia_ovos(request):
 
 def retirada_pintinhos(request):
     return render(request, "retirada_pintinhos.html")
+
+from django.shortcuts import get_object_or_404, redirect
+from django.contrib.auth.decorators import login_required
+
+@login_required
+def adicionar_anotacao(request, lote_id):
+    lote = get_object_or_404(Lote, pk=lote_id, usuario=request.user)
+    if request.method == "POST":
+        texto = request.POST.get("texto")
+        if texto:
+            Anotacao.objects.create(lote=lote, texto=texto)
+    return redirect("incubacao:lote_detalhe", pk=lote.pk)
+
+
+
+def anotacao_deletar(request, pk):
+
+    anotacao = get_object_or_404(Anotacao, pk=pk)
+
+    # Verifica se foi enviado por POST
+    if request.method == "POST":
+        lote = anotacao.lote  # Para redirecionar de volta
+        anotacao.delete()
+        messages.success(request, "Anotação excluída com sucesso.")
+        return redirect("incubacao:lote_detalhe", pk=lote.pk)
+
+    # Se não for POST, volta sem excluir
+    messages.error(request, "Requisição inválida.")
+    return redirect("incubacao:lote_lista")
+
+
+
+from django.shortcuts import get_object_or_404, redirect
+from django.contrib import messages
+from .models import Anotacao, Lote
+
+def anotacao_editar(request, pk):
+    anotacao = get_object_or_404(Anotacao, pk=pk)
+    
+    if request.method == "POST":
+        texto = request.POST.get("texto", "").strip()
+        if texto:
+            anotacao.texto = texto
+            anotacao.save()
+            messages.success(request, "Anotação atualizada com sucesso!")
+        else:
+            messages.error(request, "O texto da anotação não pode estar vazio.")
+    
+    # redireciona de volta para a página do lote
+    return redirect("incubacao:lote_detalhe", pk=anotacao.lote.pk)
