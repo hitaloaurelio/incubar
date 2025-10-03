@@ -116,3 +116,30 @@ class Anotacao(models.Model):
 
     def __str__(self):
         return f"Anotação em {self.lote.nome} - {self.criado_em.strftime('%d/%m/%Y')}"
+
+
+
+
+class Notificacao(models.Model):
+    lote = models.ForeignKey(
+        Lote,
+        on_delete=models.CASCADE,
+        related_name="notificacoes"
+    )
+    usuario = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.CASCADE,
+        related_name="notificacoes"
+    )
+    titulo = models.CharField(max_length=200)
+    mensagem = models.TextField()
+    data = models.DateTimeField()  # quando o alerta deve aparecer
+    lida = models.BooleanField(default=False)
+
+    criado_em = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        ordering = ['data']
+
+    def __str__(self):
+        return f"Notif: {self.titulo} ({self.lote.nome})"

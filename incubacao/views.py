@@ -10,9 +10,31 @@ from django.urls import reverse_lazy
 from django.shortcuts import redirect, get_object_or_404
 from django.contrib import messages
 
-from .models import Lote, EggType,Anotacao
+from .models import Lote, EggType,Anotacao,Notificacao
 from .forms import LoteForm
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.utils import timezone
+
+
+from django.shortcuts import get_object_or_404, redirect
+from django.contrib.auth.decorators import login_required
+
+from django.shortcuts import get_object_or_404, redirect
+from django.contrib import messages
+from .models import Anotacao, Lote
+
+from django.urls import reverse_lazy
+from django.views.generic import CreateView
+from .models import CustomUser
+from .forms import CustomUserCreationForm
+
+from django.shortcuts import render, redirect
+from django.contrib import messages
+from .forms import CustomUserCreationForm
+from django.core.exceptions import PermissionDenied
+from django.views.generic import DeleteView
+from django.shortcuts import redirect, get_object_or_404
+
 
 class LoteListView(LoginRequiredMixin,ListView):
     model = Lote
@@ -25,6 +47,17 @@ class LoteListView(LoginRequiredMixin,ListView):
 
     def get_queryset(self):
         return Lote.objects.filter(usuario=self.request.user).order_by('-id')
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        notifi = self.request.user.notificacoes.filter(lida=False)
+        print("NOTIFICAÇÃO: ",notifi)
+
+        context['notificacoes'] = notifi
+        return context
+    
+
+
 
 class LoteCreateView(LoginRequiredMixin, CreateView):
     model = Lote
@@ -60,7 +93,7 @@ class LoteDetailView(LoginRequiredMixin,DetailView):
     context_object_name = 'lote'
     login_url = '/login/' 
 
-from django.core.exceptions import PermissionDenied
+
 
 class LoteUpdateView(LoginRequiredMixin,UpdateView):
     model = Lote
@@ -81,7 +114,7 @@ class LoteUpdateView(LoginRequiredMixin,UpdateView):
         return super().form_valid(form)    
     
 
-from django.views.generic import DeleteView
+
 
 class LoteDeleteView(LoginRequiredMixin,DeleteView):
     model = Lote
@@ -93,10 +126,7 @@ class LoteDeleteView(LoginRequiredMixin,DeleteView):
         messages.success(self.request, 'Lote deletado com sucesso!')
         return super().delete(request, *args, **kwargs)
     
-from django.urls import reverse_lazy
-from django.views.generic import CreateView
-from .models import CustomUser
-from .forms import CustomUserCreationForm
+
 
 class SignUpView(CreateView):
     model = CustomUser
@@ -105,9 +135,7 @@ class SignUpView(CreateView):
     success_url = reverse_lazy("login")  # depois de cadastrar, vai para o login
 
 
-from django.shortcuts import render, redirect
-from django.contrib import messages
-from .forms import CustomUserCreationForm
+
 
 def register(request):
     if request.method == "POST":
@@ -154,8 +182,6 @@ def transferecia_ovos(request):
 def retirada_pintinhos(request):
     return render(request, "retirada_pintinhos.html")
 
-from django.shortcuts import get_object_or_404, redirect
-from django.contrib.auth.decorators import login_required
 
 @login_required
 def adicionar_anotacao(request, lote_id):
@@ -184,11 +210,7 @@ def anotacao_deletar(request, pk):
     return redirect("incubacao:lote_lista")
 
 
-
-from django.shortcuts import get_object_or_404, redirect
-from django.contrib import messages
-from .models import Anotacao, Lote
-
+@login_required
 def anotacao_editar(request, pk):
     anotacao = get_object_or_404(Anotacao, pk=pk)
     
@@ -203,3 +225,11 @@ def anotacao_editar(request, pk):
     
     # redireciona de volta para a página do lote
     return redirect("incubacao:lote_detalhe", pk=anotacao.lote.pk)
+
+
+@login_required
+def marcar_notificacao_lida(request, notif_id):
+    notif = get_object_or_404(Notificacao, id=notif_id)
+    notif.lida = True
+    notif.save()
+    return redirect(request.META.get('HTTP_REFERER', '/'))

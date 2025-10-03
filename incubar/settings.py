@@ -24,7 +24,7 @@ import os
 SECRET_KEY = 'django-insecure-v2%i20gbeg68hia%a(+ixlpveu6-o40umon!%*od0u13-4#!d7'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ["*"]
 
@@ -38,8 +38,10 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'background_task',  # roda em tempo em tempo
     'incubacao',
 ]
+
 
 
 MIDDLEWARE = [
@@ -76,12 +78,14 @@ WSGI_APPLICATION = 'incubar.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-    }
-}
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': BASE_DIR / 'db.sqlite3',
+#     }
+# }
+
+
 
 
 # Password validation
@@ -127,6 +131,7 @@ LOGOUT_REDIRECT_URL = '/login'  # URL após logout
 STATIC_URL = 'static/'
 
 STATICFILES_DIRS = (os.path.join(BASE_DIR,'incubacao/static'),)
+
 
 # STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles') 
 

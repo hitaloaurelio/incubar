@@ -6,4 +6,6 @@ class IncubacaoConfig(AppConfig):
     name = 'incubacao'
 
     def ready(self):
+        from incubacao.tasks import verificar_lotes_task
+        verificar_lotes_task(repeat=3600) 
         import incubacao.signals

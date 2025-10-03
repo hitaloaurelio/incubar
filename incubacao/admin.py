@@ -51,3 +51,35 @@ class CustomUserAdmin(UserAdmin):
     ordering = ('email',)
 
 admin.site.register(CustomUser, CustomUserAdmin)
+
+
+from django.contrib import admin
+from .models import Notificacao
+
+
+@admin.register(Notificacao)
+class NotificacaoAdmin(admin.ModelAdmin):
+    list_display = (
+        "titulo",
+        "usuario",
+        "lote",
+        "data",
+        "lida",
+        "criado_em",
+    )
+    list_filter = (
+        "lida",
+        "data",
+        "criado_em",
+        "usuario",
+        "lote",
+    )
+    search_fields = (
+        "titulo",
+        "mensagem",
+        "usuario__username",
+        "lote__nome",
+    )
+    ordering = ("-data",)
+    date_hierarchy = "data"
+    list_editable = ("lida",)

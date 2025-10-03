@@ -32,6 +32,8 @@ urlpatterns = [
     path("viragem/", views.viragem, name="viragem"),
     path("transferecia_ovos/", views.transferecia_ovos, name="transferecia_ovos"),
     path("retirada_pintinhos/", views.retirada_pintinhos, name="retirada_pintinhos"),
+
+    path("notificacoes/<int:notif_id>", views.marcar_notificacao_lida, name="marcar_lida"),
     
     
     

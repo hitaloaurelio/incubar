@@ -69,32 +69,73 @@
   </nav> {% endcomment %}
 
   <nav style="background-color: rgb(255 93 40) !important;" class="navbar navbar-expand-lg navbar-dark">
-    <div class="container d-flex justify-content-between">
-  
-      <!-- Botão + Logo juntos -->
-      <div class="d-flex align-items-center">
-        <button class="navbar-toggler me-1" type="button" data-bs-toggle="collapse" data-bs-target="#navMenu">
-          <span class="navbar-toggler-icon"></span>
-        </button>
-        <a class="navbar-brand fw-bold mb-0" href="{% url 'incubacao:lote_lista' %}">Incubar</a>
-      </div>
-  
-      <!-- Menu -->
-      <div class="collapse navbar-collapse" id="navMenu">
-        <ul class="navbar-nav ms-auto">
-          {% block botao %}{% endblock %}
-          {% if user.is_authenticated %}
-            <li class="nav-item">
-              <form method="post" action="{% url 'incubacao:logout' %}" class="d-inline">
-                {% csrf_token %}
-                <button type="submit" class="nav-link btn btn-link text-white">Sair</button>
-              </form>
-            </li>
+  <div class="container d-flex justify-content-between align-items-center">
+
+    <!-- Lado esquerdo: botão hamburguer + logo -->
+    <div class="d-flex align-items-center">
+      <button class="navbar-toggler me-2" type="button" data-bs-toggle="collapse" data-bs-target="#navMenu">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <a class="navbar-brand fw-bold mb-0" href="{% url 'incubacao:lote_lista' %}">Incubar</a>
+    </div>
+
+    <!-- Menu colapsável -->
+    <div class="collapse navbar-collapse" id="navMenu">
+      <ul class="navbar-nav ms-auto">
+        {% block botao %}{% endblock %}
+        {% if user.is_authenticated %}
+          <li class="nav-item">
+            <form method="post" action="{% url 'incubacao:logout' %}" class="d-inline">
+              {% csrf_token %}
+              <button type="submit" class="nav-link btn btn-link text-white">Sair</button>
+            </form>
+          </li>
+        {% endif %}
+      </ul>
+    </div>
+
+    <!-- 🔔 Notificações: sempre visível, mesmo em mobile -->
+    {% if user.is_authenticated %}
+    <div class="d-flex align-items-center ms-2">
+      <div class="nav-item dropdown">
+        <a id="quantidade_notificacoes"  class="nav-link position-relative" href="#" id="notifDropdown" role="button" data-bs-toggle="dropdown">
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="white" class="bi bi-bell-fill" viewBox="0 0 16 16" >
+            <path d="M8 16a2 2 0 0 0 2-2H6a2 2 0 0 0 2 2m.995-14.901a1 1 0 1 0-1.99 0A5 5 0 0 0 3 6c0 1.098-.5 6-2 7h14c-1.5-1-2-5.902-2-7 0-2.42-1.72-4.44-4.005-4.901"/>
+          </svg>
+          <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-warning">
+            {{ notificacoes|length }}
+          </span>
+        </a>
+
+        
+
+        <ul class="dropdown-menu dropdown-menu-end dropdown-menu-notif" aria-labelledby="notifDropdown">
+          {% if notificacoes %}
+            {% for notif in notificacoes %}
+              <li><hr class="dropdown-divider"></li>
+              <li class="dropdown-item d-flex justify-content-between align-items-start">
+                <div>
+                  <strong>{{ notif.titulo }}</strong><br>
+                  <small class="text-muted">{{ notif.data|date:"d/m/Y H:i" }}</small><br>
+                  <span>{{ notif.lote }} - {{ notif.mensagem }}</span>
+                </div>
+                <form method="post" action="{% url 'incubacao:marcar_lida' notif.id %}">
+                  {% csrf_token %}
+                  <button class="btn btn-sm btn-success" style="margin-top:5px;">Marcar como lida</button>
+                </form>
+              </li>
+            {% endfor %}
+          {% else %}
+            <li class="dropdown-item text-muted text-center">Nenhuma nova notificação</li>
           {% endif %}
         </ul>
       </div>
     </div>
-  </nav>
+    {% endif %}
+
+  </div>
+</nav>
+
   
   
 
