@@ -66,6 +66,14 @@ class LoteCreateView(LoginRequiredMixin, CreateView):
     success_url = reverse_lazy('incubacao:lote_lista')
     login_url = '/login/'
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        notifi = self.request.user.notificacoes.filter(lida=False)
+        print("NOTIFICAÇÃO: ",notifi)
+
+        context['notificacoes'] = notifi
+        return context
+    
     def form_valid(self, form):
         user = self.request.user
 
@@ -93,6 +101,13 @@ class LoteDetailView(LoginRequiredMixin,DetailView):
     context_object_name = 'lote'
     login_url = '/login/' 
 
+    def get_context_data(self, **kwargs):
+            context = super().get_context_data(**kwargs)
+            notifi = self.request.user.notificacoes.filter(lida=False)
+            print("NOTIFICAÇÃO: ",notifi)
+
+            context['notificacoes'] = notifi
+            return context
 
 
 class LoteUpdateView(LoginRequiredMixin,UpdateView):
@@ -102,7 +117,14 @@ class LoteUpdateView(LoginRequiredMixin,UpdateView):
     success_url = reverse_lazy('incubacao:lote_lista')  # Redireciona para a lista após sucesso
     login_url = '/login/' 
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        notifi = self.request.user.notificacoes.filter(lida=False)
+        print("NOTIFICAÇÃO: ",notifi)
 
+        context['notificacoes'] = notifi
+        return context
+    
     def dispatch(self, request, *args, **kwargs):
         if request.user.tipo == "FREE":
             raise PermissionDenied("Usuário FREE não pode editar lotes.")
@@ -125,6 +147,13 @@ class LoteDeleteView(LoginRequiredMixin,DeleteView):
     def delete(self, request, *args, **kwargs):
         messages.success(self.request, 'Lote deletado com sucesso!')
         return super().delete(request, *args, **kwargs)
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        notifi = self.request.user.notificacoes.filter(lida=False)
+        print("NOTIFICAÇÃO: ",notifi)
+
+        context['notificacoes'] = notifi
+        return context
     
 
 
