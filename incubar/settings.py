@@ -89,10 +89,10 @@ WSGI_APPLICATION = 'incubar.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'hitalo74$default',   # nome do seu banco (vem no painel do PythonAnywhere)
-        'USER': 'hitalo74',           # seu usuário do MySQL no PythonAnywhere
-        'PASSWORD': 'DellanaFlavia@#', # a senha que você criou para o banco
-        'HOST': 'hitalo74.mysql.pythonanywhere-services.com', 
+        'NAME': '',   # nome do seu banco (vem no painel do PythonAnywhere)
+        'USER': '',           # seu usuário do MySQL no PythonAnywhere
+        'PASSWORD': '', # a senha que você criou para o banco
+        'HOST': '', 
         'PORT': '3306',
     }
 }
