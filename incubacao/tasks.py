@@ -2,7 +2,7 @@ from background_task import background
 from datetime import timedelta
 from django.utils import timezone
 
-@background(schedule=3600)  # roda após 1 (uma) hora 
+@background(schedule=60)  # roda após 1 (uma) hora 
 def verificar_lotes_task():
     from .models import Lote, Notificacao
 

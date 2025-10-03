@@ -7,5 +7,5 @@ class IncubacaoConfig(AppConfig):
 
     def ready(self):
         from incubacao.tasks import verificar_lotes_task
-        verificar_lotes_task(repeat=3600) 
+        verificar_lotes_task(repeat=60) 
         import incubacao.signals
